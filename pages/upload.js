@@ -1,14 +1,15 @@
 // pages/upload.js
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { storage } from '../firebaseConfig'; // Importe apenas o storage, pois é tudo o que você precisa nesta página
 import usersData from '../data/users.json';
+import styles from '../styles/upload.module.css';
 
 const Upload = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [file, setFile] = useState(null);
   const [visibility, setVisibility] = useState('public');
   const [selectedUser, setSelectedUser] = useState('');
+  const [comment, setComment] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -22,11 +23,13 @@ const Upload = () => {
     }
   }, [router]);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  
+const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFile(file);
   };
 
-  const handleUpload = async () => {
+const handleUpload = async () => {
     if (!file) {
       alert('Por favor, selecione um arquivo.');
       return;
@@ -36,6 +39,8 @@ const Upload = () => {
     formData.append('file', file);
     formData.append('visibility', visibility);
     formData.append('user', selectedUser);
+    formData.append('comment', comment);
+
 
     try {
       const response = await fetch('/api/upload', {
@@ -53,12 +58,10 @@ const Upload = () => {
       const result = await response.json();
       console.log('Upload bem-sucedido:', result);
       alert('Upload bem-sucedido!');
-      // router.push('/posts');
     } catch (error) {
       console.error('Erro ao fazer upload:', error);
       alert('Erro ao fazer upload.');
-      // setError('Erro ao fazer upload');
-    }
+    };
   };
 
 
@@ -66,27 +69,58 @@ const Upload = () => {
     return <p>Loading...</p>;
   }
 
-  return (
-    <div>
-      <h1>Página de Upload</h1>
-      <input type="file" onChange={handleFileChange} />
-      <select value={visibility} onChange={(e) => setVisibility(e.target.value)}>
-        <option value="public">Público</option>
-        <option value="private">Privado</option>
-      </select>
-      {visibility === 'private' && (
-        <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
-          <option value="">Selecione um usuário</option>
-          {usersData.map(user => (
-            <option key={user.username} value={user.username}>
-              {user.username}
-            </option>
-          ))}
+
+return (
+  <div className={styles.pageContainer}>
+    <div className={styles.formContainer}>
+    <h1 className={styles.h1}>Página de Upload</h1>
+    <form className={styles.form}>
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="file">Escolha um arquivo</label>
+        <input id="file" className={styles.inputFile} type="file" onChange={handleFileChange} />
+      </div>
+
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="visibility">Visibilidade</label>
+        <select id="visibility" className={styles.select} value={visibility} onChange={(e) => setVisibility(e.target.value)}>
+          <option value="public">Público</option>
+          <option value="private">Privado</option>
         </select>
+      </div>
+
+      {visibility === 'private' && (
+        <div className={styles.formGroup}>
+          <label className={styles.label} htmlFor="user">Selecione um usuário</label>
+          <select id="user" className={styles.select} value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
+            <option value="">Selecione um usuário</option>
+            {usersData.map(user => (
+              <option key={user.username} value={user.username}>
+                {user.username}
+              </option>
+            ))}
+          </select>
+        </div>
       )}
-      <button onClick={handleUpload}>Upload</button>
+
+      <div className={styles.formGroup}>
+        <label className={styles.label} htmlFor="comment">Comentário</label>
+        <input
+          id="comment"
+          className={styles.input}
+          type="text"
+          placeholder="Comentário"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+      </div>
+
+      <button className={styles.button} type="button" onClick={handleUpload}>Upload</button>
+    </form>
     </div>
-  );
+  </div>
+);
+
 };
+
 
 export default Upload;

@@ -1,0 +1,92 @@
+.pageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0055a4; /* Azul da bandeira francesa */
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+  }
+  
+  .loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .h1 {
+    text-align: center;
+    color: #0055a4; /* Azul da bandeira francesa */
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-family: 'Cursive', sans-serif;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1em;
+  }
+  
+  .input:hover,
+  .input:focus {
+    border-color: #0055a4;
+    box-shadow: 0 0 5px rgba(0, 85, 164, 0.5);
+  }
+  
+  .button {
+    background-color: #ef4135; /* Vermelho da bandeira francesa */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%;
+  }
+  
+  .button:hover {
+    background-color: #d93829;
+    transform: scale(1.05);
+  }
+  
+  .error {
+    color: #ef4135; /* Vermelho da bandeira francesa */
+    margin-top: 10px;
+  }
+  
+  @media (max-width: 600px) {
+    .h1 {
+      font-size: 2em;
+      margin-bottom: 15px;
+    }
+  
+    .loginContainer {
+      padding: 30px;
+      border-radius: 10px;
+    }
+  
+    .input {
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+  
+    .button {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+  

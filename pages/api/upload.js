@@ -8,8 +8,58 @@ import fs from 'fs';
 const uploadDir = path.resolve(process.cwd(), 'uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
-}
 
+}
+// Função para determinar o tipo MIME do arquivo com base na extensão
+function getContentTypeByFileExtension(fileName) {
+  const ext = path.extname(fileName);
+  switch (ext.toLowerCase()) {
+    case '.jpg':
+    case '.jpeg':
+      return 'image/jpeg';
+    case '.png':
+      return 'image/png';
+    case '.gif':
+      return 'image/gif';
+    case '.bmp':
+      return 'image/bmp';
+    case '.webp':
+      return 'image/webp';
+    case 'mp3':
+      return 'audio/mpeg';
+    case 'wav':
+      return 'audio/wav';
+    case 'ogg':
+      return 'audio/ogg';
+    case 'mp4':
+      return 'video/mp4';
+    case 'avi':
+      return 'video/x-msvideo';
+    case 'mov':
+      return 'video/quicktime';
+    case 'mkv':
+      return 'video/x-matroska';
+    case 'txt':
+      return 'text/plain';
+    case 'pdf':
+      return 'application/pdf';
+    case 'doc':
+    case 'docx':
+      return 'application/msword';
+    case 'xls':
+    case 'xlsx':
+      return 'application/vnd.ms-excel';
+    case 'ppt':
+    case 'pptx':
+      return 'application/vnd.ms-powerpoint';
+    case 'zip':
+      return 'application/zip';
+    case 'rar':
+      return 'application/x-rar-compressed';
+    default:
+      return 'application/octet-stream'; // Tipo genérico para outros tipos de arquivo
+  }
+}
 export const config = {
   api: {
     bodyParser: false, // Desativa o body parser padrão do Next.js para lidar com uploads de arquivos
@@ -44,6 +94,7 @@ export default async function handler(req, res) {
         const uploadedFiles = Array.isArray(files.file) ? files.file : [files.file]; // Lida com múltiplos arquivos
         const user = fields.user;
         const visibility = fields.visibility;
+        const comment = fields.comment;
 
         // Realiza o upload de cada arquivo
         const uploadPromises = uploadedFiles.map(async (file) => {
@@ -53,13 +104,20 @@ export default async function handler(req, res) {
             return;
           }
 
-          // const fileName = `${user}/${Date.now()}_${file.originalFilename}`;
-          const fileId = `${user}/${Date.now()}_${file.name}`;
+          const fileId = `${user}/${visibility === 'public' ? 'public' : 'private'}/${Date.now()}_${file.originalFilename}`;
           const bucket = storage.bucket();
           const fileRef = bucket.file(fileId);
+
+          const contentType = getContentTypeByFileExtension(file.originalFilename);
+
+          const token = Date.now(); // Gera um token simples com base no timestamp
+
           const stream = fileRef.createWriteStream({
             metadata: {
-              contentType: file.type,
+              contentType: contentType,
+              metadata: {
+                firebaseStorageDownloadTokens: token,
+              },
             },
           });
 
@@ -73,8 +131,11 @@ export default async function handler(req, res) {
             });
 
             stream.on('finish', async () => {
-              const fileUrl = `https://storage.googleapis.com/${bucket.name}/${fileId}`;
-
+              // Obtém o token de acesso para o arquivo
+              const [metadata] = await fileRef.getMetadata();
+              const token = metadata?.metadata?.firebaseStorageDownloadTokens;
+             // Gera a URL pública para o arquivo com o token
+              const fileUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(fileId)}?alt=media&token=${token}`;
               // Salva as informações no Firestore
               const fileDocRef = db.collection('files').doc();
               await fileDocRef.set({
@@ -82,6 +143,8 @@ export default async function handler(req, res) {
                 visibility,
                 user,
                 fileId,
+                comment,
+                timestamp: new Date(),
               });
 
               console.log('Upload concluído:', fileUrl);

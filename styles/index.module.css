@@ -1,0 +1,78 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  
+  .backgroundImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta a imagem para cobrir todo o espaço do contêiner */
+  }
+  
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .title {
+    color: #fff;
+    font-size: 3em;
+    margin-bottom: 30px;
+    font-family: 'Cursive', sans-serif;
+    transform: translateX(-100%);
+    opacity: 0;
+    animation: slideIn 1s ease forwards;
+  }
+  
+  .startButton {
+    background-color: #ef4135; /* Vermelho da bandeira francesa */
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: bold;
+    opacity: 0;
+    margin-top: 20px;
+    transform: translateX(100%);
+    animation: fadeIn 1s ease 1s forwards, slideIn 1s ease 1s forwards;
+  }
+  
+  .startButton:hover {
+    background-color: #d93829;
+  }
+  
+  @keyframes slideIn {
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  

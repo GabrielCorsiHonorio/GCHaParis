@@ -1,5 +1,5 @@
 // firebaseConfig.js
-import { initializeApp, getApps } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 
@@ -20,8 +20,11 @@ if (!getApps().length) {
   firebaseApp = getApps()[0];
 }
 
+
+
 const storage = getStorage(firebaseApp);
 const db = getFirestore(firebaseApp);
+
 
 export { storage, db };
 

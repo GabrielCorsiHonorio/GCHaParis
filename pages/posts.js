@@ -28,7 +28,7 @@ const Posts = () => {
   const fetchFiles = async (username) => {
     try {
       console.log('Fetching files...');
-      const response = await fetch(`/api/files?username=${encodeURIComponent(username)}`);
+      const response = await fetch(`https://${process.env.VERCEL_URL}/api/files?username=${encodeURIComponent(username)}`);
       if (!response.ok) {
         throw new Error('Failed to fetch files');
       }

@@ -43,7 +43,7 @@ const handleUpload = async () => {
 
 
     try {
-      const response = await fetch('/api/upload', {
+      const response = await fetch('https://${process.env.VERCEL_URL}/api/upload', {
         method: 'POST',
         body: formData,
       });

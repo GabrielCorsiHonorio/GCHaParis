@@ -1,5 +1,4 @@
 // pages/api/upload.js
-
 import { storage, db } from '../../firebaseAdmin';
 var formidable = require('formidable');
 import path from 'path';

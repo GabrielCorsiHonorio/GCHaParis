@@ -1,6 +1,6 @@
 // firebaseAdmin.js
 const admin = require('firebase-admin');
-const serviceAccount = require('./gchaparis-firebase-adminsdk-3o6zw-2498d1e4cf.json');
+const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
 
 if (!admin.apps.length) {
   admin.initializeApp({

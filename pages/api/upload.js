@@ -125,7 +125,7 @@ export default async function handler(req, res) {
 
           return new Promise((resolve, reject) => {
             stream.on('error', (error) => {
-              console.error('Erro ao fazer upload:', error);
+              console.error('Erro ao fazer upload api:', error);
               reject(error);
             });
 

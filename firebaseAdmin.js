@@ -1,7 +1,14 @@
 // firebaseAdmin.js
 const admin = require('firebase-admin');
 require('dotenv').config();
-const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
+
+let serviceAccount;
+try {
+  serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
+} catch (error) {
+  console.error('Error parsing FIREBASE_CONFIG:', error);
+  throw new Error('Invalid FIREBASE_CONFIG environment variable');
+}
 
 if (!admin.apps.length) {
   admin.initializeApp({

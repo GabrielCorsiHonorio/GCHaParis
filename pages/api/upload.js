@@ -6,23 +6,23 @@ import path from 'path';
 import fs from 'fs';
 
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-});
+// const upload = multer({
+//   storage: multer.memoryStorage(),
+// });
 
-const uploadMiddleware = upload.single('file');
+// const uploadMiddleware = upload.single('file');
 
-const initMiddleware = (middleware) => {
-  return (req, res) =>
-    new Promise((resolve, reject) => {
-      middleware(req, res, (result) => {
-        if (result instanceof Error) {
-          return reject(result);
-        }
-        return resolve(result);
-      });
-    });
-};
+// const initMiddleware = (middleware) => {
+//   return (req, res) =>
+//     new Promise((resolve, reject) => {
+//       middleware(req, res, (result) => {
+//         if (result instanceof Error) {
+//           return reject(result);
+//         }
+//         return resolve(result);
+//       });
+//     });
+// };
 
 
 const uploadDir = path.resolve(process.cwd(), 'uploads');
@@ -90,6 +90,9 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://gch-a-paris.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  const firebaseConfig = process.env.FIREBASE_CONFIG;
+  res.status(200).json({ firebaseConfig });
 
   if (req.method === 'OPTIONS') {
     // Handle preflight request

@@ -82,7 +82,7 @@ export default async function handler(req, res) {
   }
 
   console.log('Request received:', req.method);
-  if (req.method === 'POST') {
+  // if (req.method === 'POST') {
     console.log('Upload logic starts');
     try {
       const form = new formidable.IncomingForm(); // Cria a instância de IncomingForm
@@ -180,8 +180,8 @@ export default async function handler(req, res) {
       console.error('Erro durante o upload:', error);
       res.status(500).json({ message: 'Erro durante o upload.' });
     }
-  } else {
-    res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Método ${req.method} não permitido. Apenas o método POST é suportado.`);
-  }
+  // } else {
+  //   res.setHeader('Allow', ['POST']);
+  //   res.status(405).end(`Método ${req.method} não permitido. Apenas o método POST é suportado.`);
+  // }
 }

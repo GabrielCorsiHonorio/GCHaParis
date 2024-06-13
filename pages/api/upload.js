@@ -6,11 +6,11 @@ import path from 'path';
 import fs from 'fs';
 
 
-const uploadDir = path.resolve(process.cwd(), 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
+// const uploadDir = path.resolve(process.cwd(), 'uploads');
+// if (!fs.existsSync(uploadDir)) {
+//   fs.mkdirSync(uploadDir, { recursive: true });
 
-}
+// }
 // Função para determinar o tipo MIME do arquivo com base na extensão
 function getContentTypeByFileExtension(fileName) {
   const ext = path.extname(fileName);

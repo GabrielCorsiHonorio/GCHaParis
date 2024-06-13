@@ -88,11 +88,18 @@ export const config = {
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://gch-a-paris.vercel.app');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    // Handle preflight request
+    res.status(200).end();
+    return;
+  }
 
   console.log('Request received:', req.method);
   if (req.method === 'POST') {
+    console.log('Upload logic starts');
     try {
       const form = new formidable.IncomingForm(); // Cria a instância de IncomingForm
       form.uploadDir = 'uploads'; // Diretório onde os arquivos serão temporariamente armazenados

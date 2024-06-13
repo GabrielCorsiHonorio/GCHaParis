@@ -6,25 +6,6 @@ import path from 'path';
 import fs from 'fs';
 
 
-// const upload = multer({
-//   storage: multer.memoryStorage(),
-// });
-
-// const uploadMiddleware = upload.single('file');
-
-// const initMiddleware = (middleware) => {
-//   return (req, res) =>
-//     new Promise((resolve, reject) => {
-//       middleware(req, res, (result) => {
-//         if (result instanceof Error) {
-//           return reject(result);
-//         }
-//         return resolve(result);
-//       });
-//     });
-// };
-
-
 const uploadDir = path.resolve(process.cwd(), 'uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
@@ -105,7 +86,7 @@ export default async function handler(req, res) {
     console.log('Upload logic starts');
     try {
       const form = new formidable.IncomingForm(); // Cria a instância de IncomingForm
-      form.uploadDir = 'uploads'; // Diretório onde os arquivos serão temporariamente armazenados
+      // form.uploadDir = 'uploads'; // Diretório onde os arquivos serão temporariamente armazenados
       form.keepExtensions = true; // Mantém a extensão do arquivo original
       form.multiples = true; // Permite o upload de múltiplos arquivos
 

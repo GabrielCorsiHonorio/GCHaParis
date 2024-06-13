@@ -1,8 +1,29 @@
 // pages/api/upload.js
+import multer from 'multer';
 import { storage, db } from '../../firebaseAdmin';
 var formidable = require('formidable');
 import path from 'path';
 import fs from 'fs';
+
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+
+const uploadMiddleware = upload.single('file');
+
+const initMiddleware = (middleware) => {
+  return (req, res) =>
+    new Promise((resolve, reject) => {
+      middleware(req, res, (result) => {
+        if (result instanceof Error) {
+          return reject(result);
+        }
+        return resolve(result);
+      });
+    });
+};
+
 
 const uploadDir = path.resolve(process.cwd(), 'uploads');
 if (!fs.existsSync(uploadDir)) {
@@ -66,6 +87,11 @@ export const config = {
 };
 
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://gch-a-paris.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  console.log('Request received:', req.method);
   if (req.method === 'POST') {
     try {
       const form = new formidable.IncomingForm(); // Cria a instância de IncomingForm

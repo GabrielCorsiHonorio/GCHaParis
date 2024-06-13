@@ -3,6 +3,12 @@ import { db } from '../../firebaseAdmin';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 
 export default async function handlerFiles(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://gch-a-paris.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  console.log('Request received:', req.method);
+  
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method Not Allowed' });
   }

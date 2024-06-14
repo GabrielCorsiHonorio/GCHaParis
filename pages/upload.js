@@ -23,14 +23,14 @@ const Upload = () => {
       router.push('/login');
     }
 
+  }, [router]);
+
+  useEffect(() => {
     const fetchUsers = async () => {
       try {
-          const response = await fetch('/api/login',{
-            method: 'POST'
-          });
+        const response = await fetch('/api/users');
         if (response.ok) {
           const data = await response.json();
-          console.log('Fetched users:', data); // Log para verificar os dados
           setUsers(data);
         } else {
           console.error('Error fetching users:', response.statusText);
@@ -39,10 +39,9 @@ const Upload = () => {
         console.error('Error fetching users:', error);
       }
     };
-  
-    fetchUsers();
 
-  }, [router]);
+    fetchUsers();
+  }, []);
 
 const handleFileChange = (e) => {
     const file = e.target.files[0];

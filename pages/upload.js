@@ -1,7 +1,7 @@
 // pages/upload.js
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import usersData from '../data/users.json';
+// import usersData from '../data/users.json'
 import styles from '../styles/upload.module.css';
 
 const Upload = () => {
@@ -10,6 +10,7 @@ const Upload = () => {
   const [visibility, setVisibility] = useState('public');
   const [selectedUser, setSelectedUser] = useState('');
   const [comment, setComment] = useState('');
+  const [users, setUsers] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,6 +24,29 @@ const Upload = () => {
     }
   }, [router]);
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+          const response = await fetch('/api/login',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Fetched users:', data); // Log para verificar os dados
+          setUsers(data);
+        } else {
+          console.error('Error fetching users:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+  
+    fetchUsers();
+  }, []);
   
 const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -93,11 +117,11 @@ return (
           <label className={styles.label} htmlFor="user">Selecione um usuário</label>
           <select id="user" className={styles.select} value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
             <option value="">Selecione um usuário</option>
-            {usersData.map(user => (
+              {users.map(user => (
               <option key={user.username} value={user.username}>
-                {user.username}
+              {user.username}
               </option>
-            ))}
+              ))}
           </select>
         </div>
       )}

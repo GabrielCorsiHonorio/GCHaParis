@@ -1,5 +1,5 @@
 // pages/api/upload.js
-import multer from 'multer';
+// import multer from 'multer';
 import { storage, db } from '../../firebaseAdmin';
 var formidable = require('formidable');
 import path from 'path';
@@ -61,13 +61,14 @@ export const config = {
   },
 };
 
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://gch-a-paris.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  const firebaseConfig = process.env.FIREBASE_CONFIG;
-  res.status(200).json({ firebaseConfig });
+  // const firebaseConfig = process.env.FIREBASE_CONFIG;
+  // res.status(200).json({ firebaseConfig });
 
   if (req.method === 'OPTIONS') {
     // Handle preflight request

@@ -1,6 +1,6 @@
 // pages/api/files.js
 import { db } from '../../firebaseAdmin';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+// import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 
 export default async function handlerFiles(req, res) {
   res.setHeader('Access-Control-Allow-Origin', 'https://gch-a-paris.vercel.app');

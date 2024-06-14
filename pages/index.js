@@ -1,6 +1,8 @@
 // pages/index.js
 import { useRouter } from 'next/router';
 import styles from '../styles/index.module.css';
+require('dotenv').config();
+
 
 const Home = () => {
   const router = useRouter();

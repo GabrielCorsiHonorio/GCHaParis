@@ -1,7 +1,4 @@
 // pages/api/login.js
-import { readFile } from 'fs/promises';
-import path from 'path';
-
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { username, password } = req.body;

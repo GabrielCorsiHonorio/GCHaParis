@@ -11,6 +11,7 @@ require('dotenv').config();
 // }
 
 if (!admin.apps.length) {
+  try {
   admin.initializeApp({
     credential: admin.credential.cert({
       type: process.env.FIREBASE_TYPE,
@@ -27,6 +28,9 @@ if (!admin.apps.length) {
     }),
     storageBucket: 'gchaparis.appspot.com'
   });
+} catch (error) {
+  console.error('Firebase admin initialization error', error);
+}
 }
 
 const storage = admin.storage();

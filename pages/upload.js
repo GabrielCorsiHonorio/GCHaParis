@@ -27,10 +27,12 @@ const Upload = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      console.log("Fetching users");
       try {
         const response = await fetch('/api/users');
         if (response.ok) {
           const data = await response.json();
+          console.log("Users fetched successfully:", data);
           setUsers(data);
         } else {
           console.error('Error fetching users:', response.statusText);
@@ -40,8 +42,10 @@ const Upload = () => {
       }
     };
 
-    fetchUsers();
-  }, []);
+    if (isAdmin) {
+      fetchUsers();
+    }
+  }, [isAdmin]);
 
 const handleFileChange = (e) => {
     const file = e.target.files[0];

@@ -22,16 +22,11 @@ const Upload = () => {
     } else {
       router.push('/login');
     }
-  }, [router]);
 
-  useEffect(() => {
     const fetchUsers = async () => {
       try {
           const response = await fetch('/api/login',{
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            }
+            method: 'POST'
           });
         if (response.ok) {
           const data = await response.json();
@@ -46,8 +41,9 @@ const Upload = () => {
     };
   
     fetchUsers();
-  }, []);
-  
+
+  }, [router]);
+
 const handleFileChange = (e) => {
     const file = e.target.files[0];
     setFile(file);

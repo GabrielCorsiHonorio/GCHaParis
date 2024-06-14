@@ -5,12 +5,6 @@ var formidable = require('formidable');
 import path from 'path';
 import fs from 'fs';
 
-
-// const uploadDir = path.resolve(process.cwd(), 'uploads');
-// if (!fs.existsSync(uploadDir)) {
-//   fs.mkdirSync(uploadDir, { recursive: true });
-
-// }
 // Função para determinar o tipo MIME do arquivo com base na extensão
 function getContentTypeByFileExtension(fileName) {
   const ext = path.extname(fileName);
@@ -82,11 +76,10 @@ export default async function handler(req, res) {
   }
 
   console.log('Request received:', req.method);
-  // if (req.method === 'POST') {
+  if (req.method === 'POST') {
     console.log('Upload logic starts');
     try {
       const form = new formidable.IncomingForm(); // Cria a instância de IncomingForm
-      // form.uploadDir = 'uploads'; // Diretório onde os arquivos serão temporariamente armazenados
       form.keepExtensions = true; // Mantém a extensão do arquivo original
       form.multiples = true; // Permite o upload de múltiplos arquivos
 
@@ -180,8 +173,8 @@ export default async function handler(req, res) {
       console.error('Erro durante o upload:', error);
       res.status(500).json({ message: 'Erro durante o upload.' });
     }
-  // } else {
-  //   res.setHeader('Allow', ['POST']);
-  //   res.status(405).end(`Método ${req.method} não permitido. Apenas o método POST é suportado.`);
-  // }
+  } else {
+    res.setHeader('Allow', ['POST']);
+    res.status(405).end(`Método ${req.method} não permitido. Apenas o método POST é suportado.`);
+  }
 }

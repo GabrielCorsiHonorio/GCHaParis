@@ -16,7 +16,7 @@ const Upload = () => {
     const username = localStorage.getItem('username');
     const authenticated = localStorage.getItem('authenticated');
 
-    if (username === 'admin' && authenticated === 'true') {
+    if (username === 'gabriel' && authenticated === 'true') {
       setIsAdmin(true);
     } else {
       router.push('/login');

@@ -6,9 +6,11 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { username, password } = req.body;
 
-    const filePath = path.join(process.cwd(), 'data', 'users.json');
-    const fileContent = await readFile(filePath, 'utf-8');
-    const users = JSON.parse(fileContent);
+    const usersJson = process.env.USERS_JSON;
+    if (!usersJson) {
+      return res.status(500).json({ message: 'User data not available' });
+    }
+    const users = JSON.parse(usersJson);
 
     const user = users.find(user => user.username === username && user.password === password);
 

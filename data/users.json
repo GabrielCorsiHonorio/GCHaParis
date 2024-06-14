@@ -1,15 +1,47 @@
 [
     {
-      "username": "admin",
-      "password": "admin123"
+      "username": "gabriel",
+      "password": "corsi"
     },
     {
-      "username": "user1",
-      "password": "password1"
+      "username": "mae",
+      "password": "foda"
     },
     {
-      "username": "user2",
-      "password": "password2"
+      "username": "pai",
+      "password": "bravado"
+    },
+    {
+      "username": "raphas",
+      "password": "vebula"
+    },
+    {
+      "username": "eshlyn",
+      "password": "simon"
+    },
+    {
+      "username": "avos",
+      "password": "neto"
+    },
+    {
+      "username": "meninas",
+      "password": "lasanha"
+    },
+    {
+      "username": "volpinis",
+      "password": "gon"
+    },
+    {
+      "username": "santos",
+      "password": "presidente"
+    },
+    {
+      "username": "conrado",
+      "password": "puta"
+    },
+    {
+      "username": "carol",
+      "password": "loirinha"
     }
   ]
   

@@ -26,10 +26,9 @@ const handleLogin = async () => {
   if (response.ok) {
     localStorage.setItem('username', username);
     localStorage.setItem('authenticated', 'true');
-    if (username === 'admin') {
+    if (username === 'gabriel') {
       router.push('/upload');// Redirecionar para a página de upload para o admin
     } else {
-      // window.location.href = '/posts.html'; // Redirecionar para a página principal para os outros usuários
       router.push('/posts');
     }
   } else {
@@ -37,26 +36,6 @@ const handleLogin = async () => {
   }
 };
 
-
-  // return (
-  //   <div>
-  //     <h1>Login</h1>
-  //     <input
-  //       type="text"
-  //       value={username}
-  //       onChange={(e) => setUsername(e.target.value)}
-  //       placeholder="Username"
-  //     />
-  //     <input
-  //       type="password"
-  //       value={password}
-  //       onChange={(e) => setPassword(e.target.value)}
-  //       placeholder="Password"
-  //     />
-  //     <button onClick={handleLogin}>Login</button>
-  //     {error && <p>{error}</p>}
-  //   </div>
-  // );
 
   return (
     <div className={styles.pageContainer}>

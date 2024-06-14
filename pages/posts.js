@@ -16,7 +16,7 @@ const Posts = () => {
     console.log('Authenticated from localStorage:', authenticated);
 
 
-    if (username && username !== 'admin' && authenticated === 'true') {
+    if (username && username !== 'gabriel' && authenticated === 'true') {
       setIsUser(true);
       fetchFiles(username);
 

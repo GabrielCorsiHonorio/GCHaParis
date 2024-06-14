@@ -15,9 +15,9 @@ export default async function handlerFiles(req, res) {
 
   console.log('Request received:', req.method);
 
-  // if (req.method !== 'GET') {
-  //   return res.status(405).json({ message: 'Method Not Allowed' });
-  // }
+  if (req.method !== 'GET') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+  }
 
 try {
     const { username } = req.query;

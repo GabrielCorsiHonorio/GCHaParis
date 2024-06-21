@@ -103,8 +103,17 @@
 .videoContainer {
   position: relative;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  padding-top: 75%; /* Proporção de aspecto 4:3 (calculado como 3 / 4 * 100) */
+  overflow: hidden;
+}
+
+.videoContainer video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 

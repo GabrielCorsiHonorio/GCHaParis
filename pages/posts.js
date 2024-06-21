@@ -64,6 +64,17 @@ const hideControls = () => {
   setControlsVisible(false);
 };
 
+const handleVideoTouch = () => {
+  const video = videoRef.current;
+  if (video) {
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  }
+};
+
 
 
   if (!isUser) {
@@ -95,13 +106,26 @@ const hideControls = () => {
       <div className={styles.videoContainer}    
       onMouseEnter={showControls}
       onMouseLeave={hideControls}
-      onTouchStart={showControls}
-      onTouchEnd={hideControls}>
+      onClick={handleVideoTouch}
+      onTouchStart={() => videoRef.current?.play()}
+      onTouchEnd={() => videoRef.current?.pause()}>
       <video ref={videoRef} controls={controlsVisible} className={styles.video} controlsList="nodownload nofullscreen" >
         <source src={file.imageURL} type={file.type} />
         Seu navegador não suporta a tag de vídeo.
       </video>
-      </div>
+    </div>
+      ) : file.type.startsWith('audio/') ? (
+        <audio 
+          ref={videoRef} 
+          className={styles.audio}
+          onClick={handleVideoTouch}
+          onTouchStart={() => videoRef.current?.play()}
+          onTouchEnd={() => videoRef.current?.pause()}
+          controls
+          >
+          <source src={file.imageURL} type={file.type} />
+            Seu navegador não suporta a tag de áudio.
+          </audio>
     ) : (
       <p>Formato de mídia não suportado</p>
     )
@@ -110,7 +134,7 @@ const hideControls = () => {
   )}
 </div>
 
-      <p className={styles.comment}>{file.comment}</p>
+      <p className={styles.comment}><b>{file.comment}</b></p>
     </li>
   ))}
 </ul>

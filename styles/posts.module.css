@@ -92,13 +92,11 @@
 }
 
 .media img, 
-.media video {
+.media video 
+.media audio {
   max-width: 100%;
   height: auto;
   display: block;
-}
-
-.media img {
   object-fit: cover;
 }
 
@@ -109,30 +107,26 @@
   justify-content: center;
 }
 
-.media video {
-  object-fit: cover;
-}
-
 
 /* Ocultar o botão de tela cheia no Chrome */
-.video::-webkit-media-controls-fullscreen-button {
+.video::-webkit-media-controls-fullscreen-button,
+.audio::-webkit-media-controls-fullscreen-button {
   display: none;
 }
 
 /* Ocultar o botão de tela cheia no Firefox */
-.video::-moz-fullscreen-button {
+.video::-moz-fullscreen-button,
+.audio::-moz-fullscreen-button {
   display: none;
 }
 
 /* Ocultar o botão de tela cheia no IE/Edge */
-.video::-ms-fullscreen-button {
+.video::-ms-fullscreen-button,
+.audio::-ms-fullscreen-button {
   display: none;
 }
 
-/* Ocultar o botão de tela cheia no Safari */
-.video::--webkit-media-controls-fullscreen-button {
-  display: none;
-}
+
 .comment {
   padding: 15px;
   color: #333;

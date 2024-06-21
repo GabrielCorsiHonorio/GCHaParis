@@ -1,4 +1,5 @@
 // pages/api/files.js
+import { Timestamp } from 'firebase-admin/firestore';
 import { db } from '../../firebaseAdmin';
 // import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 
@@ -53,7 +54,9 @@ try {
         visibility: file.visibility,
         user: file.user,
         imageURL: file.url,
-        comment: file.comment
+        comment: file.comment,
+        timestamp: file.timestamp,
+        type: file.type
         // Outros campos do arquivo, se necessário
     }));
 

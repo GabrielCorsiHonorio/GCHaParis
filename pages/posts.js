@@ -42,7 +42,16 @@ const Posts = () => {
       console.log('Fetch files completed.');
     }
   };
-  
+
+  // Função para converter timestamp em Date
+const parseDate = (timestamp) => {
+  const [day, month, year] = timestamp.split('/');
+  return new Date(year, month - 1, day); // Mês é baseado em zero, então subtraímos 1
+};
+
+// Ordena os arquivos pela data, mais recentes primeiro
+const sortedFiles = files.sort((a, b) => parseDate(b.timestamp) - parseDate(a.timestamp));
+
 
   if (!isUser) {
     return <p>Loading...</p>;
@@ -55,23 +64,38 @@ const Posts = () => {
       <p className={styles.usuariotxt}>Bem-vindo, {username}</p>
         <h1 className={styles.h1}>Posts</h1>
         <ul className={styles.postsList}>
-          {files.map((file) => (
-            <li key={file.id} className={styles.container}>
-              <div className={styles.header}>
-                <img src="/images/fotodeperfil.png" alt="Foto de perfil" className={styles.profilePic} />
-                <span className={styles.profileName}>Gabriel Corsi Honório</span>
-              </div>
-              <div className={styles.image}>
-                {file.imageURL ? (
-                  <img src={file.imageURL} alt={file.id} />
-                ) : (
-                  <p>Imagem não encontrada</p>
-                )}
-              </div>
-              <p className={styles.comment}>{file.comment}</p>
-            </li>
-          ))}
-        </ul>
+      {sortedFiles.map((file) => (
+    <li key={file.id} className={styles.container}>
+      <div className={styles.header}>
+      <div className={styles.left}>
+        <img src="/images/fotodeperfil.png" alt="Foto de perfil" className={styles.profilePic} />
+        <span className={styles.profileName}>Gabriel Corsi Honório</span>
+      </div>
+        <p className={styles.date}>{file.timestamp}</p>
+      </div>
+
+      <div className={styles.media}>
+  {file.imageURL ? (
+    file.type.startsWith('image/') ? (
+      <img src={file.imageURL} alt={file.id} className={styles.image} />
+    ) : file.type.startsWith('video/') ? (
+      <video autoplay muted className={styles.video} >
+        <source src={file.imageURL} type={file.type} />
+        Seu navegador não suporta a tag de vídeo.
+      </video>
+    ) : (
+      <p>Formato de mídia não suportado</p>
+    )
+  ) : (
+    <p>Mídia não encontrada</p>
+  )}
+</div>
+
+      <p className={styles.comment}>{file.comment}</p>
+    </li>
+  ))}
+</ul>
+
       </div>
     );
   };

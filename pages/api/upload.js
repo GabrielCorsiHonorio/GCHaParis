@@ -2,59 +2,10 @@
 // import multer from 'multer';
 import { storage, db } from '../../firebaseAdmin';
 var formidable = require('formidable');
-import path from 'path';
 import fs from 'fs';
+import moment from 'moment-timezone';
 
 // Função para determinar o tipo MIME do arquivo com base na extensão
-function getContentTypeByFileExtension(fileName) {
-  const ext = path.extname(fileName);
-  switch (ext.toLowerCase()) {
-    case '.jpg':
-    case '.jpeg':
-      return 'image/jpeg';
-    case '.png':
-      return 'image/png';
-    case '.gif':
-      return 'image/gif';
-    case '.bmp':
-      return 'image/bmp';
-    case '.webp':
-      return 'image/webp';
-    case 'mp3':
-      return 'audio/mpeg';
-    case 'wav':
-      return 'audio/wav';
-    case 'ogg':
-      return 'audio/ogg';
-    case 'mp4':
-      return 'video/mp4';
-    case 'avi':
-      return 'video/x-msvideo';
-    case 'mov':
-      return 'video/quicktime';
-    case 'mkv':
-      return 'video/x-matroska';
-    case 'txt':
-      return 'text/plain';
-    case 'pdf':
-      return 'application/pdf';
-    case 'doc':
-    case 'docx':
-      return 'application/msword';
-    case 'xls':
-    case 'xlsx':
-      return 'application/vnd.ms-excel';
-    case 'ppt':
-    case 'pptx':
-      return 'application/vnd.ms-powerpoint';
-    case 'zip':
-      return 'application/zip';
-    case 'rar':
-      return 'application/x-rar-compressed';
-    default:
-      return 'application/octet-stream'; // Tipo genérico para outros tipos de arquivo
-  }
-}
 export const config = {
   api: {
     bodyParser: false, // Desativa o body parser padrão do Next.js para lidar com uploads de arquivos
@@ -118,13 +69,12 @@ export default async function handler(req, res) {
           const bucket = storage.bucket();
           const fileRef = bucket.file(fileId);
 
-          const contentType = getContentTypeByFileExtension(file.originalFilename);
 
           const token = Date.now(); // Gera um token simples com base no timestamp
 
           const stream = fileRef.createWriteStream({
             metadata: {
-              contentType: contentType,
+              contentType: file.mimetype,
               metadata: {
                 firebaseStorageDownloadTokens: token,
               },
@@ -154,7 +104,8 @@ export default async function handler(req, res) {
                 user,
                 fileId,
                 comment,
-                timestamp: new Date(),
+                timestamp: moment.tz('America/Sao_Paulo').format('DD/MM/YYYY'),
+                type: file.mimetype,
               });
 
               console.log('Upload concluído:', fileUrl);
@@ -162,7 +113,6 @@ export default async function handler(req, res) {
             });
           });
 
-          stream.end(file.path);
         });
 
         // Aguarda o término de todos os uploads

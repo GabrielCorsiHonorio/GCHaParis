@@ -54,6 +54,12 @@
   padding: 10px 15px;
   background-color: #f7f7f7;
   border-bottom: 1px solid #eee;
+  justify-content: space-between;
+}
+
+.header .left {
+  display: flex;
+  align-items: center;
 }
 
 .profilePic {
@@ -70,10 +76,34 @@
   font-size: 1.1em;
 }
 
-.image img {
-  width: 100%;
+.date {
+  font-weight: bold;
+  color: #0055a4;
+  font-size: 1.1em;
+}
+
+
+.media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.media img, 
+.media video {
+  max-width: 100%;
   height: auto;
   display: block;
+}
+
+.media img {
+  object-fit: cover;
+}
+
+.media video {
+  object-fit: cover;
 }
 
 .comment {

@@ -102,10 +102,37 @@
   object-fit: cover;
 }
 
+.videoContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .media video {
   object-fit: cover;
 }
 
+
+/* Ocultar o botão de tela cheia no Chrome */
+.video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
+
+/* Ocultar o botão de tela cheia no Firefox */
+.video::-moz-fullscreen-button {
+  display: none;
+}
+
+/* Ocultar o botão de tela cheia no IE/Edge */
+.video::-ms-fullscreen-button {
+  display: none;
+}
+
+/* Ocultar o botão de tela cheia no Safari */
+.video::--webkit-media-controls-fullscreen-button {
+  display: none;
+}
 .comment {
   padding: 15px;
   color: #333;

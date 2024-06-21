@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../styles/posts.module.css';
 
@@ -6,6 +6,10 @@ const Posts = () => {
   const [isUser, setIsUser] = useState(false);
   const [files, setFiles] = useState([]);
   const router = useRouter();
+  const [controlsVisible, setControlsVisible] = useState(false);
+
+  const videoRef = useRef(null);
+
 
   useEffect(() => {
     console.log('useEffect triggered');
@@ -52,6 +56,15 @@ const parseDate = (timestamp) => {
 // Ordena os arquivos pela data, mais recentes primeiro
 const sortedFiles = files.sort((a, b) => parseDate(b.timestamp) - parseDate(a.timestamp));
 
+const showControls = () => {
+  setControlsVisible(true);
+};
+
+const hideControls = () => {
+  setControlsVisible(false);
+};
+
+
 
   if (!isUser) {
     return <p>Loading...</p>;
@@ -79,10 +92,16 @@ const sortedFiles = files.sort((a, b) => parseDate(b.timestamp) - parseDate(a.ti
     file.type.startsWith('image/') ? (
       <img src={file.imageURL} alt={file.id} className={styles.image} />
     ) : file.type.startsWith('video/') ? (
-      <video autoplay muted className={styles.video} >
+      <div className={styles.videoContainer}    
+      onMouseEnter={showControls}
+      onMouseLeave={hideControls}
+      onTouchStart={showControls}
+      onTouchEnd={hideControls}>
+      <video ref={videoRef} controls={controlsVisible} className={styles.video} controlsList="nodownload nofullscreen" >
         <source src={file.imageURL} type={file.type} />
         Seu navegador não suporta a tag de vídeo.
       </video>
+      </div>
     ) : (
       <p>Formato de mídia não suportado</p>
     )
